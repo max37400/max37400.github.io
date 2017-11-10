@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+
+        <title>Machine learning</title>
+
+    </head>
+
+    <style>
+   font {
+    color: #000000;font-size: 18px;
+   }
+   body {
+    background: #FFFFFF ; /* Цвет фона и путь к файлу */
+    margin: 2% 20% 2% 20%;
+   }
+   </style>
+    <body align="centered">
+	<font>
+	    <h1> Машинное обучение</h1>
+	    <img src="https://static1.squarespace.com/static/53d92c42e4b0e2c24f499483/t/59cd13e490badefdc2502a58/1506612217122/machine+learning+in+software+development">
+	    <hr>
+	    <p><b>Машинное обучение</b> - подраздел искусственного интеллекта, изучающий методы построения алгоритмов, способных обучаться. Различают два вида обучения:с учителем и без учителя.</p>
+	<hr>
+	<p>В первом случае имеется множество объектов и множество возможных ответов. Существует некоторая зависимость между ними, но она неизвестна, известна лишь совокупность прецендентов - пар "объект, ответ", называемых обучающей выборкой.</p>
+	<p>На основе этих данных и требуется восстановить зависимость, то есть построить алгоритм, способный для любого объекта выдать достаточно точный ответ.</p>
+	<hr>
+	<p>Во втором же случае изучается шировкий класс задач обработки данных, в которых известны только описания множеств объектов и требуется обнаружить внутренние зависимости, существующие между объектами.</p>
+	<p>Самыми распространенными задачами для такого обучения являются кластеризация, поиск ассоциативных правил и т.п.</p>
+	<p>Рассмотрим основные виды задач:</p>
+	<ul>
+	  <li>Регрессия</li>
+	  <li>Классификация</li>
+	  <li>Кластеризация</li>
+	</ul>
+	<p>Рассматривать все задачи будем на известном <a style="color:red;" href="https://www.kaggle.com/c/titanic/data">датасете</a> "Титаник"</p>
+	<p>Для начала рассмотрим регрессию.</p>
+	<p>Под регрессией подразумаевается метод моделирования измеряемых данных и исследования их свойств. Данные состоят из пар значение зависимой переменной и независимой переменной.</p>
+	<p>Регрессионный анализ используется для прогноза, анализа временных рядов, тестирования гипотез и т.п.</p>
+	<p>Рассмотрим простейший пример: линейную регрессию.</p>
+	<img src="http://www.machinelearning.ru/mimetex/? y=\sum_{j=1}^N w_jx_j+\nu=\langle\mathbf{w},\mathbf{x}\rangle +\nu, " alt=" y=\sum_{j=1}^N w_jx_j+\nu=\langle\mathbf{w},\mathbf{x}\rangle +\nu, ">
+	<p>В данном случае, y - переменная, которую нам нужно предсказать,w - некоторый весовой коэффициент, x - значение признака, <img src="http://www.machinelearning.ru/mimetex/? \nu" alt="\nu ">- аддитивная случайная величина с нулевым мат. ожиданием.</p>
+	<p>На примере наших данных, нужно предсказать возраст, основываясь на таких признаках, как пол, номер каюты и т.п.</p>
+	<pre class="python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">import</span> pandas <span style="color: #ff7700;font-weight:bold;">as</span> pd
+DataFrame<span style="color: #66cc66;">=</span>pd.<span style="color: black;">read_csv</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'train.csv'</span><span style="color: black;">&#41;</span>
+DataFrame.<span style="color: black;">head</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre>
+	<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+	<pre class="python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> sklearn.<span style="color: black;">linear_model</span> <span style="color: #ff7700;font-weight:bold;">import</span> LinearRegression <span style="color: #ff7700;font-weight:bold;">as</span> LR
+regr <span style="color: #66cc66;">=</span> LR<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+regr.<span style="color: black;">fit</span><span style="color: black;">&#40;</span>data_x<span style="color: #66cc66;">,</span> data_y<span style="color: black;">&#41;</span>
+data_y_nan <span style="color: #66cc66;">=</span> regr.<span style="color: black;">predict</span><span style="color: black;">&#40;</span>data_x_nan<span style="color: black;">&#41;</span></pre>
+	<p>Код выше позволяет предсказать значение возраста по значению других критериев. Конечно, необходимо произвести предобработку данных, прежде чем передавать их в модель, так как регрессия работает только с числами.</p>
+	<p>Как определить, насколько хорошо работает наша модель? Очень просто!</p>
+	<p>Для этого вводят метрику качества. В случае с регрессией, отлично подходит среднеквадратичная ошибка. Рассмотрим график.</p>
+	<img src="http://www.machinelearning.ru/wiki/images/8/89/Regression_Analysis_Linear.gif">
+	<p>Для ее нахождения необходимо найти квадрат разности каждого предсказанного значения и истинного значения, после чего все это складывается и делится на количество объектов.Чем меньше данное значение, тем лучше.</p>
+	<hr>
+	<p>Далее рассмотрим классификацию.</p>
+	<p><b>Классификация</b> - один из разделов машинного обучения, посвященный решению следующей задачи:</p>
+	<p>Имеется множество объектов, разделенных некоторым образом на классы. Задано множество объектов, для которых известен класс, к которому они относятся, для остальных объектов принадлежность неизвестна.</p>
+	<p><b>Классифицировать объект </b>- значит, указать номер класса, к которому относится данный объект. Подобные задачи также называют задачами дискриминантного анализа.</p>
+	<p>В рамках данной задачи рассмотрим метод LogisticRegression.</p>
+	<p>Преимущества этой модели в ее простоте и использовании логистической функции.</p>
+	<p>Логистическая регрессия используется для предсказания вероятности возникновения некоторого события по значениям признаков. Для этого вводится некая переменная, называемая зависимой, которая принимает, как правило, одно из двух значений: 0, если событие не произошло, и 1, если событие произошло.</p>
+	<p>Рассмотрим график логистической функции  <img src="http://latex.numberempire.com/render?y=\frac{1}{1+x^{-e}}" 
+      alt="Logistic function"> </p>
+	<img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Logistic-curve.png">
+	<p>Исходя из этого графика, если значение у>0.5, то объект относится к первому классу, иначе, к нулевому. В нашей задаче, это означает, выжил человек или нет.</p>
+	<pre class="python" style="font-family:monospace;">alg_log <span style="color: #66cc66;">=</span> LogisticRegression<span style="color: black;">&#40;</span>random_state<span style="color: #66cc66;">=</span><span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+scores <span style="color: #66cc66;">=</span> cross_val_score<span style="color: black;">&#40;</span>alg_log<span style="color: #66cc66;">,</span> train_data_scaled<span style="color: #66cc66;">,</span> train_data_munged<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;Survived&quot;</span><span style="color: black;">&#93;</span><span style="color: #66cc66;">,</span> cv<span style="color: #66cc66;">=</span>cv<span style="color: #66cc66;">,</span> n_jobs<span style="color: #66cc66;">=</span>-<span style="color: #ff4500;">1</span><span style="color: #66cc66;">,</span>
+                         scoring<span style="color: #66cc66;">=</span>linear_scorer<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Accuracy (logistic regression): {}/{}&quot;</span>.<span style="color: black;">format</span><span style="color: black;">&#40;</span>scores.<span style="color: black;">mean</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">,</span> scores.<span style="color: black;">std</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre>
+	<p> Используя данный код, получим необходимые нам метки классов.</p>
+	<pre class="python" style="font-family:monospace;">Accuracy <span style="color: black;">&#40;</span>logistic regression<span style="color: black;">&#41;</span>: <span style="color: #ff4500;">0.806958473625</span>/<span style="color: #ff4500;">0.0156323100754</span></pre>
+	<p>Исходя из значения метрики качества, модель обучилась достаточно неплохо.</p>
