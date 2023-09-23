@@ -4,9 +4,9 @@ public class BadScriptEngineFactory implements ScriptEngineFactory {
     @Override
     public String getEngineName() {
         try {
-            Runtime.getRuntime().exec("ls");
+            Runtime.getRuntime().exec("dir");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return null;
     }
