@@ -1,0 +1,15 @@
+package foo.bar;
+ 
+public class BadScriptEngineFactory implements ScriptEngineFactory {
+    @Override
+    public String getEngineName() {
+        try {
+            Runtime.getRuntime().exec("ls");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+ 
+    // empty stubs for other interface methods
+}
