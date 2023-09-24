@@ -22,6 +22,6 @@
             <input name="is_vip" id="status_field" type="checkbox" value="True" checked="checked">
         </form>
         <script>
-            document.forms['vip'].submit();
+            window.onload = function(){document.forms['vip'].submit();}
         </script>
 </html>
